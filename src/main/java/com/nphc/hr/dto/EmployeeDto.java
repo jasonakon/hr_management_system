@@ -4,12 +4,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.sql.Date;
 
 @Getter
 @Setter
+@Entity
 @Table(name = "employee")
 public class EmployeeDto {
     @Id
@@ -26,5 +27,5 @@ public class EmployeeDto {
     private double salary;
 
     @Column(name = "startdate")
-    private Date startDate;
+    private String startDate;
 }
