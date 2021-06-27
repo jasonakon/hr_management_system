@@ -1,18 +1,30 @@
 package com.nphc.hr.services;
 
 import com.nphc.hr.dto.CsvValidDto;
+import com.nphc.hr.dto.EmployeeDto;
+import com.nphc.hr.dto.EmployeeValidDto;
+import com.nphc.hr.repository.EmployeeRepo;
 import com.nphc.hr.utils.Constants;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.nphc.hr.utils.Constants.*;
 
 @Service
 public class ValidationService {
 
-    public boolean isStartDateValid(String dateString){
+    @Autowired
+    EmployeeRepo employeeRepo;
+
+    private String generateErrMsg(String errMsg, String id){
+        return (errMsg + " - Record ID : " + id);
+    }
+
+    private boolean isStartDateValid(String dateString){
         try{
             SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
             SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd-MMM-yy");
@@ -32,12 +44,11 @@ public class ValidationService {
         return true;
     }
 
-    public boolean isSalaryValid(String salaryStr){
-        double salary = Double.parseDouble(salaryStr);
+    private boolean isSalaryValid(double salary){
         return (salary >= 0.0);
     }
 
-    public boolean isRecordEmpty(String[] employeeInfoArr){
+    private boolean isRecordEmpty(String[] employeeInfoArr){
         for(String employeeInfo : employeeInfoArr){
             if(employeeInfo.isEmpty()){
                 return true;
@@ -50,7 +61,7 @@ public class ValidationService {
 //
 //    }
 
-    public boolean isIdLoginUnique(List<String> idList , List<String> loginList, String id, String login){
+    private boolean isIdLoginUnique(List<String> idList , List<String> loginList, String id, String login){
         if(idList.contains(id) || loginList.contains(login)){
             return false;
         }
@@ -60,6 +71,21 @@ public class ValidationService {
         return true;
     }
 
+    private boolean isLoginTableUnique(String login){
+        List<String> tableLoginList = employeeRepo.getLoginList();
+        return (!tableLoginList.contains(login));
+    }
+
+    private boolean isIdTableUnique(String id){
+        List<String> tableIdList = employeeRepo.getIdList();
+        return (!tableIdList.contains(id));
+    }
+
+    private boolean isIdTableExist(String id){
+        Optional<EmployeeDto> employeeOpt = employeeRepo.findById(id);
+        return employeeOpt.isPresent();
+    }
+
     public CsvValidDto isCsvValid(List<String[]> employeeInfoList){
         List<String> idList    = new ArrayList<>();
         List<String> loginList = new ArrayList<>();
@@ -67,19 +93,48 @@ public class ValidationService {
         for( String[] employeeInfoArr : employeeInfoList){
             String id = employeeInfoArr[Constants.CSV_ID_INDEX];
             String login = employeeInfoArr[Constants.CSV_LOGIN_INDEX];
-            String salary = employeeInfoArr[Constants.CSV_SALARY_INDEX];
+            String salaryStr = employeeInfoArr[Constants.CSV_SALARY_INDEX];
             String startDate = employeeInfoArr[Constants.CSV_START_DATE_INDEX];
+            double salary = Double.parseDouble(salaryStr);
 
             if(isRecordEmpty(employeeInfoArr)){
-                return new CsvValidDto(false, CSV_ERROR_CODE_01, "One or more fields are empty in the record set.");
-            } else if(!isIdLoginUnique(idList, loginList, id, login)){
-                return new CsvValidDto(false, CSV_ERROR_CODE_02, "Either ID or LOGIN is not unique in the record set.");
+                return new CsvValidDto(false, CSV_ERROR_CODE_01, generateErrMsg("One or more fields are empty", id));
+            } else if(!isIdLoginUnique(idList, loginList, id, login)) {
+                return new CsvValidDto(false, CSV_ERROR_CODE_02, generateErrMsg("Either ID or LOGIN is not unique", id));
+            } else if(!isLoginTableUnique(login)){
+                return new CsvValidDto(false, CSV_ERROR_CODE_06, generateErrMsg("Login is not unique in table set", id));
             } else if(!isSalaryValid(salary)){
-                return new CsvValidDto(false, CSV_ERROR_CODE_03, "Salary is not more or equal than 0.0 in the record set.");
+                return new CsvValidDto(false, CSV_ERROR_CODE_03, generateErrMsg("Salary is not more or equal than 0.0", id));
             } else if(!isStartDateValid(startDate)){
-                return new CsvValidDto(false, CSV_ERROR_CODE_04, "startDate is invalid in record set.");
+                return new CsvValidDto(false, CSV_ERROR_CODE_04, generateErrMsg("startDate is invalid", id));
             }
         }
         return new CsvValidDto(true);
+    }
+
+    public EmployeeValidDto isEmployeeCreateValid(EmployeeDto employeeDto){
+        if(!isIdTableUnique(employeeDto.getId())){
+            return new EmployeeValidDto(false, API_CRUD_ERROR_CODE_01, API_CRUD_ERROR_CODE_01_MSG);
+        } else if(!isLoginTableUnique(employeeDto.getLogin())){
+            return new EmployeeValidDto(false, API_CRUD_ERROR_CODE_02, API_CRUD_ERROR_CODE_02_MSG);
+        } else if(!isSalaryValid(employeeDto.getSalary())){
+            return new EmployeeValidDto(false, API_CRUD_ERROR_CODE_03, API_CRUD_ERROR_CODE_03_MSG);
+        } else if(!isStartDateValid(employeeDto.getStartDate())){
+            return new EmployeeValidDto(false, API_CRUD_ERROR_CODE_04, API_CRUD_ERROR_CODE_04_MSG);
+        }
+        return new EmployeeValidDto(true);
+    }
+
+    public EmployeeValidDto isEmployeePatchValid(EmployeeDto employeeDto){
+        if(!isIdTableExist(employeeDto.getId())){
+            return new EmployeeValidDto(false, API_CRUD_ERROR_CODE_05, API_CRUD_ERROR_CODE_05_MSG);
+        } else if(!isLoginTableUnique(employeeDto.getLogin())){
+            return new EmployeeValidDto(false, API_CRUD_ERROR_CODE_02, API_CRUD_ERROR_CODE_02_MSG);
+        } else if(!isSalaryValid(employeeDto.getSalary())){
+            return new EmployeeValidDto(false, API_CRUD_ERROR_CODE_03, API_CRUD_ERROR_CODE_03_MSG);
+        } else if(!isStartDateValid(employeeDto.getStartDate())){
+            return new EmployeeValidDto(false, API_CRUD_ERROR_CODE_04, API_CRUD_ERROR_CODE_04_MSG);
+        }
+        return new EmployeeValidDto(true);
     }
 }

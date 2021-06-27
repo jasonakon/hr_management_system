@@ -2,7 +2,10 @@ package com.nphc.hr.services;
 
 import com.nphc.hr.dto.CsvValidDto;
 import com.nphc.hr.dto.EmployeeDto;
+import com.nphc.hr.dto.EmployeeValidDto;
+import com.nphc.hr.dto.ResultsDto;
 import com.nphc.hr.exceptions.CsvValidationException;
+import com.nphc.hr.exceptions.EmployeeCrudException;
 import com.nphc.hr.repository.EmployeeRepo;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
@@ -14,7 +17,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Supplier;
 
 import static com.nphc.hr.utils.Constants.*;
 
@@ -25,6 +31,8 @@ public class EmployeeService {
 
     @Autowired
     ValidationService validationService;
+    @Autowired
+    FilterService filterService;
     @Autowired
     EmployeeRepo employeeRepo;
 
@@ -68,6 +76,53 @@ public class EmployeeService {
             employeeRepo.save(employee);
         }
     }
-    
+
+    public EmployeeDto getEmployeeById(String id) throws EmployeeCrudException {
+        Optional<EmployeeDto> employee = employeeRepo.findById(id);
+        Supplier<EmployeeCrudException> exceptionSupplier = () -> new EmployeeCrudException(API_CRUD_ERROR_CODE_05, API_CRUD_ERROR_CODE_05_MSG);
+        return employee.orElseThrow(exceptionSupplier);
+    }
+
+    public Object processEmpFetch(double minSalary, double maxSalary, int offset, int limit, String id) throws EmployeeCrudException {
+        if(!id.equals("empty")){
+            return getEmployeeById(id);
+        } else {
+            List<EmployeeDto> employeeFetchList = employeeRepo.getFetchList(minSalary, maxSalary);
+            if (!employeeFetchList.isEmpty()) {
+                filterService.filterByOffset(offset, employeeFetchList);
+                filterService.filterByLimit(limit, employeeFetchList);
+            }
+            ResultsDto results = new ResultsDto();
+            results.setResults(employeeFetchList);
+            return results;
+        }
+    }
+
+    public void createEmployee(EmployeeDto employee) throws EmployeeCrudException {
+        EmployeeValidDto employeeValidity = validationService.isEmployeeCreateValid(employee);
+        if(employeeValidity.isValid()){
+           employeeRepo.save(employee);
+        } else {
+            throw new EmployeeCrudException(employeeValidity.getErrCode(), employeeValidity.getErrMsg());
+        }
+    }
+
+    public void patchEmployee(EmployeeDto employee) throws EmployeeCrudException {
+        EmployeeValidDto employeeValidity = validationService.isEmployeePatchValid(employee);
+        if(employeeValidity.isValid()){
+            employeeRepo.save(employee);
+        } else {
+            throw new EmployeeCrudException(employeeValidity.getErrCode(), employeeValidity.getErrMsg());
+        }
+    }
+
+    public void deleteEmployee(String id) throws EmployeeCrudException {
+        Optional<EmployeeDto> employeeOpt = employeeRepo.findById(id);
+        if(employeeOpt.isPresent()){
+            employeeRepo.deleteById(id);
+        } else {
+            throw new EmployeeCrudException(API_CRUD_ERROR_CODE_05, API_CRUD_ERROR_CODE_05_MSG);
+        }
+    }
 
 }
