@@ -23,7 +23,7 @@ Started SalaryManagementApplication in 5.562 seconds (JVM running for 6.088)
 
 ### Method 2 : Using Docker
 1. Making sure docker is installed : https://docs.docker.com/get-docker/
-2. Download the docker binary image :
+2. Download the docker binary image : https://1drv.ms/u/s!AoK0vXAOFQ_CkGrI1iVNpN1nO2l-?e=e758Co
 3. Run the command to load the binary image:
 ```bash
 docker load -i hr_management_system_docker.tar
@@ -54,4 +54,20 @@ java -jar target/hr-0.0.1-SNAPSHOT.jar
 ```
 5. The application will be hosted at http://localhost:8080/
 
+## Testing
+### CSV File
+Referring to the folder path *data/csv* contains a list of csv test files which used for requirement validation. A README.txt file is attached as well.
+
 ## Future improvement
+1. Broader test cases for the csv input file
+2. More option for the PUT request whereby record can be directly changed by only specifying individual field value
+3. More filtering / sorting feature for the GET request
+
+These improvement may be optional for the assignment requirement but it is manageable to be implemented with given more time. However, this application alone handled numberous edge exceptions from users invalid inputs to processing.
+
+## Contact
+Please feel free to contact me if you encountered any issue:
+<br/>
+Email : jasonakon@gmail.com
+<br/>
+OR drop an issue in the repostiory. Thank you!
