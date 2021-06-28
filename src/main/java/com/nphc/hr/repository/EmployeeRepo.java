@@ -11,13 +11,13 @@ import java.util.List;
 @Repository
 public interface EmployeeRepo extends JpaRepository<EmployeeDto, String> {
 
-    @Query(value = "select u.login from employee u", nativeQuery = true)
-    List<String> getLoginList();
+    @Query(value = "select u.login from employee u where u.id != :id", nativeQuery = true)
+    List<String> getLoginExpIdList(@Param("id") String id);
 
     @Query(value = "select u.id from employee u", nativeQuery = true)
     List<String> getIdList();
 
-    @Query(value = "select * from employee u where u.salary >= :minSalary and u.salary < :maxSalary", nativeQuery = true)
+    @Query(value = "select * from employee u where u.salary >= :minSalary and u.salary < :maxSalary order by u.id", nativeQuery = true)
     List<EmployeeDto> getFetchList(@Param("minSalary") double minSalary, @Param("maxSalary") double maxSalary);
 
 }

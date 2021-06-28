@@ -9,3 +9,10 @@ employee_test_3.csv
 
 employee_test_4.csv
 - same id but different login
+- contain one hashtag record #
+
+employee_test_5.csv
+- contain duplicated new records
+
+employee_test_6.csv
+- with one missing column

@@ -1,6 +1,8 @@
 package com.nphc.hr.utils;
 
 public class Constants {
+    public static final String IGNORED_COMMENT = "#";
+
     public static final int CSV_ID_INDEX = 0;
     public static final int CSV_LOGIN_INDEX = 1;
     public static final int CSV_NAME_INDEX = 2;
@@ -13,16 +15,19 @@ public class Constants {
     public static final String CSV_ERROR_CODE_04 = "CSV_ERR04";
     public static final String CSV_ERROR_CODE_05 = "CSV_ERR05";
     public static final String CSV_ERROR_CODE_06 = "CSV_ERR06";
+    public static final String CSV_ERROR_CODE_07 = "CSV_ERR07";
 
     public static final String API_CRUD_ERROR_CODE_01 = "API_CREATE_ERR01";
     public static final String API_CRUD_ERROR_CODE_02 = "API_CREATE_ERR02";
     public static final String API_CRUD_ERROR_CODE_03 = "API_CREATE_ERR03";
     public static final String API_CRUD_ERROR_CODE_04 = "API_CREATE_ERR04";
     public static final String API_CRUD_ERROR_CODE_05 = "API_CREATE_ERR05";
+    public static final String API_CRUD_ERROR_CODE_06 = "API_CREATE_ERR06";
 
     public static final String API_CRUD_ERROR_CODE_01_MSG = "Employee ID already exists";
     public static final String API_CRUD_ERROR_CODE_02_MSG = "Employee login not unique";
     public static final String API_CRUD_ERROR_CODE_03_MSG = "Invalid salary";
     public static final String API_CRUD_ERROR_CODE_04_MSG = "Invalid date";
     public static final String API_CRUD_ERROR_CODE_05_MSG = "No such employee";
+    public static final String API_CRUD_ERROR_CODE_06_MSG = "Mismatch in given id with employee data";
 }

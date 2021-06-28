@@ -5,10 +5,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CrudMsgDto {
+public class MsgDto {
     private String message;
 
-    public CrudMsgDto(String message){
+    public MsgDto(String message){
         this.message = message;
     }
 }

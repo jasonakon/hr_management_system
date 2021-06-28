@@ -17,11 +17,11 @@ public class EmployeeDto {
     @Column(name = "id")
     private String id;
 
-    @Column(name = "login")
-    private String login;
-
     @Column(name = "name")
     private String name;
+
+    @Column(name = "login")
+    private String login;
 
     @Column(name = "salary")
     private double salary;
