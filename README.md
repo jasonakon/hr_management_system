@@ -57,6 +57,10 @@ java -jar target/hr-0.0.1-SNAPSHOT.jar
 ## Testing
 ### CSV File
 Referring to the folder path *data/csv* contains a list of csv test files which used for requirement validation. A README.txt file is attached as well.
+### Postman
+I been using postman for testing the application including file uploads and all the CRUD functionality.
+<br/>
+You can find a collection of requests i used for testing here : https://www.getpostman.com/collections/9d77113fd0fea581be74
 
 ## Future improvement
 1. Broader test cases for the csv input file
