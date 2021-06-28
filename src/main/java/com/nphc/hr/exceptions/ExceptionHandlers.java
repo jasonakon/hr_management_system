@@ -10,6 +10,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.multipart.MultipartException;
 
 import javax.validation.ConstraintViolationException;
 
@@ -47,6 +48,11 @@ public class ExceptionHandlers {
 
     @ExceptionHandler(value = ConstraintViolationException.class)
     public ResponseEntity<Object> invalidRequestInputException(ConstraintViolationException exception){
+        return new ResponseEntity<>(new ErrMsgDto(exception.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = MultipartException.class)
+    public ResponseEntity<Object> invalidRequestFileException(MultipartException exception){
         return new ResponseEntity<>(new ErrMsgDto(exception.getMessage()), HttpStatus.BAD_REQUEST);
     }
 }
