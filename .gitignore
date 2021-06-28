@@ -171,3 +171,24 @@ target/surefire-reports/com.nphc.hr.SalaryManagementApplicationTests.txt
 target/surefire-reports/TEST-com.nphc.hr.ControllerTests.xml
 target/surefire-reports/TEST-com.nphc.hr.SalaryManagementApplicationTests.xml
 target/test-classes/com/nphc/hr/ControllerTests.class
+.idea/sonarlint/issuestore/5/1/512c7fa89ff0eef2aff733b2777e924fe203e9ac
+.idea/sonarlint/issuestore/7/f/7f906b02c25df3e24f6198832f30ccb72ff2158b
+.idea/sonarlint/issuestore/c/e/ce05e5814a8558053114595a31ce71e468993be2
+target/surefire-reports/com.nphc.hr.CsvFileTests.txt
+target/surefire-reports/com.nphc.hr.FilterServiceTests.txt
+target/surefire-reports/com.nphc.hr.ValidationServiceTests.txt
+target/surefire-reports/TEST-com.nphc.hr.CsvFileTests.xml
+target/surefire-reports/TEST-com.nphc.hr.FilterServiceTests.xml
+target/surefire-reports/TEST-com.nphc.hr.ValidationServiceTests.xml
+target/test-classes/com/nphc/hr/CsvFileTests.class
+target/test-classes/com/nphc/hr/FilterServiceTests.class
+target/test-classes/com/nphc/hr/ValidationServiceTests.class
+target/test-classes/csv/employee_test_1.csv
+target/test-classes/csv/employee_test_2.csv
+target/test-classes/csv/employee_test_3.csv
+target/test-classes/csv/employee_test_4.csv
+target/test-classes/csv/employee_test_5.csv
+target/test-classes/csv/employee_test_6.csv
+target/test-classes/csv/README.txt
+target/test-classes/csv/invalid files/test_text_file.txt
+target/test-classes/csv/invalid files/test_text_file.zip
