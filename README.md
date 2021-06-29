@@ -13,9 +13,10 @@ git clone https://github.com/jasonakon/hr_management_system.git hr_management_sy
 ```
 
 ### Method 1 : Using Intellij IDE *(Easiest)*
-1. Import the project directly using IntelliJ and wait for the IDE to index all the required files and dependencies.
-2. Head to *SalaryManagementApplication* and *right-click* and choose *Run 'SalaryManageme...main()'*
-3. Wait for the application to run and you shall see the last log showing : 
+1. Import the project directly using IntelliJ.
+2. Wait for the IDE to index all the required files and dependencies.
+3. Head to *SalaryManagementApplication* and *right-click* and choose *Run 'SalaryManageme...main()'*
+4. Wait for the application to run and you shall see the last log showing : 
 ```
 Started SalaryManagementApplication in 5.562 seconds (JVM running for 6.088)
 ```
@@ -53,7 +54,6 @@ mvn clean package
 java -jar target/hr-0.0.1-SNAPSHOT.jar
 ```
 5. The application will be hosted at http://localhost:8080/
-<br/>
 
 ## Connecting Database (H2)
 This project uses embedded H2 database from Spring, below will show how to connect to the database:
