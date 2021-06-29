@@ -53,18 +53,21 @@ mvn clean package
 java -jar target/hr-0.0.1-SNAPSHOT.jar
 ```
 5. The application will be hosted at http://localhost:8080/
+<br/>
 
 ## Connecting Database (H2)
 This project uses embedded H2 database from Spring, below will show how to connect to the database:
 1. Make sure your application is running.
 2. Head to this url if you hosted in localhost : http://localhost:8080/h2-console
 3. Fill up the configuration of H2:
+```bash
    - Save Setting : Generic H2 (Embedded)
    - Setting Name : Generic H2 (Embedded)
    - Driver Class : org.h2.Driver
    - JDBC URL     : jdbc:h2:mem:hr_management_db
    - User Name    : admin
    - Password     : admin
+```
 4. Click connect and you're set !
 
 ## Testing
