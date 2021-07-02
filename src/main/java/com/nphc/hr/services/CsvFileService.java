@@ -47,19 +47,23 @@ public class CsvFileService {
 
     private List<EmployeeDto> generateEmployeeList(List<String[]> rawCsvList) throws CsvValidationException {
         List<EmployeeDto> employeeList = new ArrayList<>();
-        CsvValidDto csvValidity = validationService.isCsvValid(rawCsvList);
-        if(csvValidity.isValid()){
-            for(String[] employeeInfoArr : rawCsvList) {
-                EmployeeDto employee = new EmployeeDto();
-                employee.setId(employeeInfoArr[CSV_ID_INDEX]);
-                employee.setLogin(employeeInfoArr[CSV_LOGIN_INDEX]);
-                employee.setName(employeeInfoArr[CSV_NAME_INDEX]);
-                employee.setSalary(Double.parseDouble(employeeInfoArr[CSV_SALARY_INDEX]));
-                employee.setStartDate(employeeInfoArr[CSV_START_DATE_INDEX]);
-                employeeList.add(employee);
+        try {
+            CsvValidDto csvValidity = validationService.isCsvValid(rawCsvList);
+            if (csvValidity.isValid()) {
+                for (String[] employeeInfoArr : rawCsvList) {
+                    EmployeeDto employee = new EmployeeDto();
+                    employee.setId(employeeInfoArr[CSV_ID_INDEX]);
+                    employee.setLogin(employeeInfoArr[CSV_LOGIN_INDEX]);
+                    employee.setName(employeeInfoArr[CSV_NAME_INDEX]);
+                    employee.setSalary(Double.parseDouble(employeeInfoArr[CSV_SALARY_INDEX]));
+                    employee.setStartDate(employeeInfoArr[CSV_START_DATE_INDEX]);
+                    employeeList.add(employee);
+                }
+            } else {
+                throw new CsvValidationException(csvValidity.getErrCode(), csvValidity.getErrMsg());
             }
-        } else {
-            throw new CsvValidationException(csvValidity.getErrCode(), csvValidity.getErrMsg());
+        } catch (Exception ex){
+            throw new CsvValidationException("CSV_ERROR_CODE_08", ex.getMessage());
         }
         return employeeList;
     }

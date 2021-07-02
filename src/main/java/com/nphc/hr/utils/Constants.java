@@ -16,6 +16,7 @@ public class Constants {
     public static final String CSV_ERROR_CODE_05 = "CSV_ERR05";
     public static final String CSV_ERROR_CODE_06 = "CSV_ERR06";
     public static final String CSV_ERROR_CODE_07 = "CSV_ERR07";
+    public static final String CSV_ERROR_CODE_08 = "CSV_ERR08";
 
     public static final String API_CRUD_ERROR_CODE_01 = "API_CREATE_ERR01";
     public static final String API_CRUD_ERROR_CODE_02 = "API_CREATE_ERR02";
