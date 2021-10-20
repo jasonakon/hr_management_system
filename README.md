@@ -1,8 +1,12 @@
 # HR Management system
-This is a custom ERP HR application made for project interview using Spring Boot.
+This is a custom ERP HR application made for project interview using Java Spring Boot.
 
 ## Introduction:
 This project was initially made for interviewing purposes as an assignment requested by the interviewer. The assignment consists of several parts modules and features to be implemented such as csv file upload, database table realisation, CRUD application and others. Spring Boot was chosen for this project for development with maven.
+
+## Tech Stack:
+1. Java Spring Boot
+2. Microservices
 
 ## How to run ?
 ### Pre-requisite:
