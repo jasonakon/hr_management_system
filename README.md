@@ -1,4 +1,4 @@
-# HR Management system (NPHC)
+# HR Management system
 This is a custom ERP HR application made for project interview using Spring Boot.
 
 ## Introduction:
